@@ -76,10 +76,11 @@ import org.bukkit.event.player.PlayerTeleportEvent;
  * @since 0.0.1
  */
 public class NPCNetHandler extends PlayerConnection {
+    private NPCManager npcManager;
 
     public NPCNetHandler(NPCManager npcManager, EntityPlayer entityplayer) {
-        super(npcManager.getServer().getMCServer(), npcManager.getNPCNetworkManager(),
-                entityplayer);
+        super(npcManager.getServer().getMCServer(), npcManager.getNPCNetworkManager(), entityplayer);
+        this.npcManager = npcManager;
     }
 
     public NPCNetHandler(MinecraftServer minecraftserver, NetworkManager networkmanager, EntityPlayer entityplayer) {
@@ -134,7 +135,9 @@ public class NPCNetHandler extends PlayerConnection {
     public void syncPosition() {    }
 
     @Override
-    public NetworkManager a() {    }
+    public NetworkManager a() {
+        return npcManager.getNPCNetworkManager();
+    }
 
     /**
      * @deprecated
