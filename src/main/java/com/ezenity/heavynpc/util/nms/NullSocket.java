@@ -1,4 +1,4 @@
-package com.ezenity.lightnpc.util.nms;
+package com.ezenity.heavynpc.util.nms;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

@@ -1,26 +1,34 @@
-package com.ezenity.lightnpc.util;
+package com.ezenity.heavynpc.util;
 
-import com.ezenity.lightnpc.Main;
-import com.ezenity.lightnpc.util.nms.BServer;
-import com.ezenity.lightnpc.util.nms.BWorld;
+import com.ezenity.heavynpc.configuration.Config;
+import com.ezenity.heavynpc.configuration.Lang;
+import com.ezenity.heavynpc.util.nms.NPCNetworkManager;
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.server.v1_16_R2.Entity;
 import net.minecraft.server.v1_16_R2.NetworkManager;
 import net.minecraft.server.v1_16_R2.Packet;
 import net.minecraft.server.v1_16_R2.PlayerInteractManager;
 import net.minecraft.server.v1_16_R2.World;
 import net.minecraft.server.v1_16_R2.WorldServer;
+
+import org.bukkit.craftbukkit.v1_16_R2.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
+
+import com.ezenity.heavynpc.Main;
+import com.ezenity.heavynpc.util.nms.BServer;
+import com.ezenity.heavynpc.util.nms.BWorld;
+
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_16_R2.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.NPC;
@@ -36,19 +44,24 @@ import org.bukkit.event.world.ChunkLoadEvent;
  * Handles all task for a light/heavy npc.
  *
  * @author Ezenity
- * @version 0.0.1
+ * @version 0.1.0
  */
 public class NPCManager {
     /**
      * Initialize a plugin instance. This is used for instantiating the npc to the plugin.
      */
-    private Main plugin;
+    private final Main plugin;
     /**
      * Map of the npcs. Creates an hashmap for a npc as an integer.
      */
-    private HashMap<Integer, NPC> npcs = new HashMap<>();
+    private final HashMap<Integer, NPC> npcs = new HashMap<>();
+    public ConcurrentHashMap<String, Mob> mobDB = new ConcurrentHashMap<>();
+    public ConcurrentHashMap<Integer, Player> mobIDs = new ConcurrentHashMap<>();
+    private final HashMap<Integer, Boolean> isMob = new HashMap<>();
+    private final Map<World, BWorld> bworlds = new HashMap<>();
     private int taskId;
-    private BServer server;
+    private final BServer server;
+    private NPCNetworkManager npcNetworkManager;
 
     public NPCManager(Main plugin) {
         this.plugin = plugin;
@@ -97,7 +110,7 @@ public class NPCManager {
         @EventHandler
         public void onPluginDisable(PluginDisableEvent event) {
             if (event.getPlugin() == plugin) {
-                if(plugin.debug) plugin.log(ChatColor.GREEN + "Removing all loaded NPCs.");
+                if(Config.DEBUG_MODE) Logger.log(ChatColor.GREEN + "Removing all loaded NPCs.");
                 despawnAll();
                 Bukkit.getServer().getScheduler().cancelTask(taskId);
             }
@@ -108,9 +121,9 @@ public class NPCManager {
         @EventHandler
         public void onChunkLoad(ChunkLoadEvent event) {
             for (NPC npc : npcs.values()) {
-                if (npc != null && event.getChunk() == npc.getBukkitEntity().getLocation().getBlock().getChunk()) {
-                    BWorld world = getBWorld(event.getWorld());
-                    world.getWorldServer().addEntity(npc.getEntity());
+                if (npc != null && event.getChunk() == npc.getChunk()) {
+                    BWorld world = getBWorld((World) event.getWorld());
+                    world.getWorldServer().addEntity((Entity) npc.getTarget());
                 }
             }
         }
@@ -124,20 +137,20 @@ public class NPCManager {
 
     public NPC spawnHumanNPC(String name, Location l, Integer id) {
         if (npcs.containsKey(id)) {
-            plugin.log(ChatColor.RED + "NPC with that id already exists, existing NPC returned (" + id + ")");
+            Logger.log(ChatColor.RED + "NPC with that id already exists, existing NPC returned (" + id + ")");
             return npcs.get(id);
         } else {
             if (name.length() > 16) {
                 String tmp = name.substring(0, 16);
-                plugin.log(ChatColor.RED + "NPCs can't have names longer than 16 characters,");
-                plugin.log(ChatColor.RED + name + " has been shortened to " + tmp);
+                Logger.log(ChatColor.RED + "NPCs can't have names longer than 16 characters,");
+                Logger.log(ChatColor.RED + name + " has been shortened to " + tmp);
                 name = tmp;
             }
             BWorld world = getBWorld(l.getWorld());
-            NPCEntity npcEntity = new NPCEntity(this, world, name, new PlayerInteractManager(world.getWorldServer()));
+            NPCEntity npcEntity = new NPCEntity(this, world, name, new PlayerInteractManager(world.getWorldServer())); // TODO: Make NPCEntity Class
             npcEntity.setPositionRotation(l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
             world.getWorldServer().addEntity(npcEntity);
-            NPC npc = new HumanNPC(npcEntity);
+            NPC npc = new HumanNPC(npcEntity); // TODO: Make HumanNPC Class
             npcs.put(id, npc);
             return npc;
         }
@@ -240,8 +253,8 @@ public class NPCManager {
     public void rename(Integer id, String name) {
         if (name.length() > 16) {
             String tmp = name.substring(0, 16);
-            plugin.log(ChatColor.RED + "NPCs can't have names longer than 16 characters,");
-            plugin.log(ChatColor.RED + name + " has been shortened to " + tmp);
+            Logger.log(ChatColor.RED + "NPCs can't have names longer than 16 characters,");
+            Logger.log(ChatColor.RED + name + " has been shortened to " + tmp);
             name = tmp;
         }
         HumanNPC npc = (HumanNPC) getNPCByID(id);

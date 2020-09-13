@@ -1,4 +1,4 @@
-package com.ezenity.lightnpc.util.nms;
+package com.ezenity.heavynpc.util.nms;
 
 import net.minecraft.server.v1_16_R2.WorldProviderNormal;
 import net.minecraft.server.v1_16_R2.WorldServer;

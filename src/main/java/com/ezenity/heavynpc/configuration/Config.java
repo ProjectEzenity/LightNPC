@@ -1,9 +1,10 @@
-package com.ezenity.lightnpc.configuration;
+package com.ezenity.heavynpc.configuration;
 
-import com.ezenity.lightnpc.Main;
-import java.io.File;
+import com.ezenity.heavynpc.Main;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import java.io.File;
 
 /**
  * LightNPC Main Config Class

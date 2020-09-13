@@ -1,14 +1,15 @@
-package com.ezenity.lightnpc.command;
+package com.ezenity.heavynpc.command;
 
-import com.ezenity.lightnpc.Main;
-import com.ezenity.lightnpc.configuration.Config;
-import com.ezenity.lightnpc.configuration.Lang;
-import com.ezenity.lightnpc.util.Logger;
-import java.util.Collections;
-import java.util.List;
+import com.ezenity.heavynpc.Main;
+import com.ezenity.heavynpc.configuration.Config;
+import com.ezenity.heavynpc.configuration.Lang;
+import com.ezenity.heavynpc.util.Logger;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * LightNPC Reload Class

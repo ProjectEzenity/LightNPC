@@ -1,4 +1,4 @@
-package com.ezenity.lightnpc.util.nms;
+package com.ezenity.heavynpc.util.nms;
 
 import net.minecraft.server.v1_16_R2.EntityPlayer;
 import net.minecraft.server.v1_16_R2.IChatBaseComponent;
@@ -63,7 +63,7 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_16_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
 
-import com.ezenity.lightnpc.util.NPCManager;
+import com.ezenity.heavynpc.util.NPCManager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -71,7 +71,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 /**
  *
  * @author martin
- * @version 0.1.0
+ * @version 0.1.1
  *  - Edited by Ezenity
  * @since 0.0.1
  */
