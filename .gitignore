@@ -4,7 +4,7 @@
 .settings/
 
 # Intellij
-.idea/*
+/.idea/*
 *.iml
 *.iws
 
@@ -14,6 +14,9 @@
 # Maven
 log/
 target/
+
+# Test
+/src/test
 
 # Floobits
 .floo*
