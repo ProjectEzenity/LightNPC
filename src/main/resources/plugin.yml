@@ -1,0 +1,23 @@
+name: "${project.artifactId}"
+main: "${project.groupId}.Main"
+version: "${project.version}"
+description: "${project.description} Coming Soon."
+author: "Ezenity"
+api-version: "1.15"
+depend: []
+
+commands:
+  lightnpc:
+    description: Reload command for pluign.
+    usage: /<command> (arguments)
+  npc:
+    description: Command which offers multiple functions
+    usage: /<command> [function] (arguments)
+
+permissions:
+  command.lightnpc.reload:
+    description: Allows sender to reload the configuration files.
+    default: op
+  command.lightnpc.create:
+    description: Allows sender to create an Light NPC.
+    default: op
