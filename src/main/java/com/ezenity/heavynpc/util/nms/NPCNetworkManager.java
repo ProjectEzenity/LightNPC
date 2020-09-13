@@ -15,6 +15,7 @@ import java.lang.reflect.Field;
  *
  * @author martin
  * @version 0.1.0
+ *  - Edited by Ezenity
  * @since 0.0.1
  */
 public class NPCNetworkManager extends NetworkManager /* NetworkManagerServer */ {

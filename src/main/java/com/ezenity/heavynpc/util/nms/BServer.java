@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  * Server hacks for Bukkit
  *
  * @author Kekec852
- *  - Updated by Ezenity
+ *  - Edited by Ezenity
  * @version 0.1.0
  * @since 0.0.1
  */
