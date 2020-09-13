@@ -25,6 +25,7 @@ import java.util.logging.Logger;
  * @author martin
  *  - Modifed by Ezenity
  * @version 0.1.0
+ * @since 0.0.1
  */
 public class BWorld {
     private BServer server;

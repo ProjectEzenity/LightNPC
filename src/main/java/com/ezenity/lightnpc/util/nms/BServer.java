@@ -22,6 +22,7 @@ import java.util.logging.Logger;
  * @author Kekec852
  *  - Updated by Ezenity
  * @version 0.1.0
+ * @since 0.0.1
  */
 public class BServer {
     private static BServer ins;
