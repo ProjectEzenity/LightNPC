@@ -9,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * LightNPC Main Plugin Class
  *
  * @author Ezenity
- * @version v0.0.1
+ * @version 0.0.1
  */
 public class Main extends JavaPlugin {
     /**

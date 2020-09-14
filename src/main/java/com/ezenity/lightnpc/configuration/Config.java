@@ -9,6 +9,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
  * LightNPC Main Config Class
  * <p>
  * Here you will find all the default configuration options that are available with YouGotMail
+ *
+ * @author Ezenity
+ * @version 0.0.1
+ * @since 0.0.1
  */
 public class Config {
     /**

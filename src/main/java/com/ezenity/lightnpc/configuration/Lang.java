@@ -12,6 +12,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
  * LightNPC Language Class
  *
  * Here you will find all the language options
+ *
+ * @author Ezenity
+ * @version 0.0.1
+ * @since 0.0.1
  */
 public class Lang {
     /**
@@ -61,7 +65,7 @@ public class Lang {
      * @param str String to colorize
      * @return Return a colorized string
      */
-    private static String colorize(String str) {
+    public static String colorize(String str) {
         if (str == null) {
             return "";
         }

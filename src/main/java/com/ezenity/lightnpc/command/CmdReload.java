@@ -18,6 +18,10 @@ import org.bukkit.command.TabExecutor;
  *     <li>Config</li>
  *     <li>Lang</li>
  * </ul>
+ *
+ * @author Ezenity
+ * @version 0.0.1
+ * @since 0.0.1
  */
 public class CmdReload implements TabExecutor {
     /**

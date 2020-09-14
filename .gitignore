@@ -14,9 +14,10 @@
 # Maven
 log/
 target/
+test/
 
 # Test
-/src/test
+./src/test
 
 # Floobits
 .floo*
